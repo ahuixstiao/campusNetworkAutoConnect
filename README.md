@@ -5,7 +5,7 @@
 
 # IDEA连接Docker来一键部署SpringBoot项目
 
-#### 1、先将项目通过maven或gradle打包成jar，并切换到jar目录下.
+#### 1、先到yml配置文件中配置你的账号密码然后将项目通过maven或gradle打包成jar，并切换到jar所在的目录下.
 
 
 #### 2、配置Docker并连接.
