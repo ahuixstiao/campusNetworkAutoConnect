@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: autoConnect
+
+
+
+task:
+  campusUrl: http://172.20.3.100/webauth.do?wlanacip=172.16.1.82&wlanacname=GXSTNU-BRAS&wlanuserip=172.17.212.40&mac=ac:75:1d:7d:ee:02&vlan=0&url=http://1.1.1.1
+  auth_type: 0
+  isBindMac1: 0
+  pageid: 1
+  templatetype: 1
+  listbindmac: 0
+  recordmac: 0
+  isRemind: 1
+  url: "http%3A%2F%2F1.1.1.1"
+  notice_pic_loop1: "%2Fportal%2Fuploads%2Fpc%2Fdemo3%2Fimages%2Flogo.jpg"
+  notice_pic_loop2: "%2Fportal%2Fuploads%2Fpc%2Fdemo3%2Fimages%2Frrs_bg.jpg"
+  userId:
+  passwd:
+  remInfo: on
