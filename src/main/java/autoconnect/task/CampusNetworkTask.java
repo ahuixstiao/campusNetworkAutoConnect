@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: ahui
@@ -23,7 +24,7 @@ public class CampusNetworkTask {
     private final TaskEntity task;
 
     @Autowired
-    private CampusNetworkTask (TaskEntity taskEntity) {
+    public CampusNetworkTask(TaskEntity taskEntity) {
         this.task = taskEntity;
     }
 
@@ -49,14 +50,32 @@ public class CampusNetworkTask {
         map.put("passwd", task.getPasswd());
         map.put("remInfo", task.getRemInfo());
 
-        //发起请求去获取
-        //解析页面判断是否成功
+        //发起请求去解析页面
         Document document = Jsoup.parse(HttpUtil.post(task.getCampusUrl(), map));
-        String connectStatus = document.getElementsByClass("common2").get(0).text();
-        if(StrUtil.isBlank(connectStatus)) {
-            log.info("运营商网络拨号失败");
-        }else {
-            log.info("运营商网络拨号成功");
+        try {
+            //获取指定标签文本
+            String online = Objects.requireNonNull(document.getElementById("online")).text();
+            //判断是否成功进入到登录页面
+            if (StrUtil.isNotBlank(online)) {
+                log.info("运营商网络拨号成功");
+            }
+        } catch (NullPointerException nullPointerException) {
+            nullPointerException.printStackTrace();
+            //发生错误时打印返回的页面信息
+            log.error(document.toString());
+            //打印提示
+            log.info("没有这个值，请查看页面的返回是否已经更改!");
+            //失败重试.
+            this.taskContent();
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            indexOutOfBoundsException.printStackTrace();
+            //发生错误时打印返回的页面信息
+            log.error(document.toString());
+            //打印提示
+            log.info("网页中没有这标签，表示可能没能成功进入登录页面!");
+            //失败重试.
+            this.taskContent();
         }
+
     }
 }
